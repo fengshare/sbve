@@ -98,7 +98,7 @@ public class MysqlGenerator {
         strategy.setEntityLombokModel(true);
         // 设置逻辑删除键
 //        strategy.setLogicDeleteFieldName("deleted");
-        strategy.setInclude("t_recharge_log");
+        strategy.setInclude("t_recharge_lo");
         //strategy.setSuperEntityColumns("id");
         // 去掉表名的前缀
         strategy.setTablePrefix("t_");
