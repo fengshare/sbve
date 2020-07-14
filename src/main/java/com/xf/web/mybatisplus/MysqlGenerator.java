@@ -23,13 +23,11 @@ public class MysqlGenerator {
      */
     public static void main(String[] args) {
         String projectPath = "sbve";
-
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
-
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir(projectPath + "/src/main/java");
+        gc.setOutputDir( "src/main/java");
         gc.setAuthor("xf");
         gc.setOpen(true);
         //service 命名方式
@@ -54,20 +52,17 @@ public class MysqlGenerator {
         dsc.setUrl("jdbc:mysql://39.108.160.190:3360/sbve?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC");
 //        dsc.setUrl("jdbc:mysql://10.168.1.166:3306/rx_swis_bedside?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC");
         dsc.setDriverName("com.mysql.jdbc.Driver");
-        dsc.setUsername("rxdevrw");
-        dsc.setPassword("wgKk9lD8ffOEaVbt");
+        dsc.setUsername("user");
+        dsc.setPassword("7777777");
 //        dsc.setUsername("root");
 //        dsc.setPassword("qwertyuiop");
         mpg.setDataSource(dsc);
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.rixiangtek.bedside.screen");
+        pc.setParent("com.xf.web");
         pc.setEntity("entity");
         pc.setMapper("mapper");
-//        pc.setService("service");
-//        pc.setServiceImpl("service.impl");
-//        pc.setController("web.controller.rest");
         mpg.setPackageInfo(pc);
 
 
@@ -83,7 +78,7 @@ public class MysqlGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输入文件名称
-                return "swis-bedside-screen/swis-bedside-screen-service" + "/src/main/resources/mapper/"
+                return  "src/main/resources/mapper/"
                         + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
@@ -98,10 +93,8 @@ public class MysqlGenerator {
         strategy.setEntityLombokModel(true);
         // 设置逻辑删除键
 //        strategy.setLogicDeleteFieldName("deleted");
-        strategy.setInclude("t_recharge_lo");
+        strategy.setInclude("ums_admin");
         //strategy.setSuperEntityColumns("id");
-        // 去掉表名的前缀
-        strategy.setTablePrefix("t_");
         //驼峰转连字符
         strategy.setControllerMappingHyphenStyle(true);
         //生成的Controller类自带@RestController注解
