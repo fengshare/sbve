@@ -2,14 +2,17 @@ package com.xf.web.controller;
 
 
 import com.xf.web.common.result.CommonResult;
+import com.xf.web.dto.UmsAdminLoginParam;
 import com.xf.web.dto.UmsAdminParam;
 import com.xf.web.entity.UmsAdmin;
 import com.xf.web.service.UmsAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -22,6 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/ums-admin")
 public class UmsAdminController {
+    @Value("${jwt.tokenHeader}")
+    private String tokenHeader;
+
+    @Value("${jwt.tokenHead}")
+    private String tokenHead;
 
     @Autowired
     private UmsAdminService umsAdminService;
@@ -35,6 +43,18 @@ public class UmsAdminController {
         return CommonResult.success("注册成功");
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult login(@RequestBody UmsAdminLoginParam umsAdminLoginParam) {
+        String token = umsAdminService.login(umsAdminLoginParam.getUsername(), umsAdminLoginParam.getPassword());
+        if (token == null) {
+            return CommonResult.validateFailed("用户名或密码错误");
+        }
+        Map<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("token", token);
+        tokenMap.put("tokenHead", tokenHead);
+        return CommonResult.success(tokenMap);
+    }
 
 
 

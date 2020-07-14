@@ -41,4 +41,11 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
         return umsAdmin;
     }
 
+    @Override
+    public String login(String username, String password) {
+
+
+        return null;
+    }
+
 }
