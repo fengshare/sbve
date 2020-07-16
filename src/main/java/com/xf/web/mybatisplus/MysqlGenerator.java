@@ -93,7 +93,7 @@ public class MysqlGenerator {
         strategy.setEntityLombokModel(true);
         // 设置逻辑删除键
 //        strategy.setLogicDeleteFieldName("deleted");
-        strategy.setInclude("ums_admin");
+        strategy.setInclude("ums_resource","ums_resource_category");
         //strategy.setSuperEntityColumns("id");
         //驼峰转连字符
         strategy.setControllerMappingHyphenStyle(true);
