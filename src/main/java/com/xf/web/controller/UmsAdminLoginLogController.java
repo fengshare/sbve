@@ -14,7 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-07-15
  */
 @RestController
-@RequestMapping("/ums-admin-login-log")
+@RequestMapping("/ums-admin-log")
 public class UmsAdminLoginLogController {
+
+    @RequestMapping("/test")
+    public String test(){
+        return "abc";
+    }
 
 }
