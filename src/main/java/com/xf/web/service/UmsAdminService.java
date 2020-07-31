@@ -1,5 +1,6 @@
 package com.xf.web.service;
 
+import com.xf.web.dto.UmsAdminLoginParam;
 import com.xf.web.dto.UmsAdminParam;
 import com.xf.web.entity.UmsAdmin;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -15,7 +16,7 @@ public interface UmsAdminService extends IService<UmsAdmin> {
 
     UmsAdmin register(UmsAdminParam umsAdminParam);
 
-    String login(String username, String password);
+    String login(UmsAdminLoginParam umsAdminLoginParam);
 
 
 

@@ -14,10 +14,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/css/**", "/index").permitAll()
-                .antMatchers("/user/**").hasRole("USER")
+//                .antMatchers("/user/**").hasRole("USER")
                 .and()
                 .formLogin()
-                .loginPage("user/login").failureUrl("/login-error");
+                .loginPage("/login.html").failureUrl("/login-error");
     }
 
     @Autowired

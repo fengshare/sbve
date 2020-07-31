@@ -1,6 +1,8 @@
 package com.xf.web.controller;
 
 
+import com.xf.web.common.constants.RedisConstants;
+import com.xf.web.common.redisUtils.RedisUtil;
 import com.xf.web.common.result.CommonResult;
 import com.xf.web.dto.UmsAdminLoginParam;
 import com.xf.web.dto.UmsAdminParam;
@@ -36,6 +38,9 @@ public class UmsAdminController {
     @Autowired
     private UmsAdminService umsAdminService;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     @RequestMapping("/register")
     public CommonResult register(@RequestBody UmsAdminParam umsAdminParam) {
         UmsAdmin umsAdmin = umsAdminService.register(umsAdminParam);
@@ -45,35 +50,18 @@ public class UmsAdminController {
         return CommonResult.success("注册成功");
     }
 
-//    @RequestMapping(value = "/user", method = RequestMethod.POST)
-//    @ResponseBody
-//    public CommonResult login(@RequestBody UmsAdminLoginParam umsAdminLoginParam) {
-//        String token = umsAdminService.login(umsAdminLoginParam.getUsername(), umsAdminLoginParam.getPassword());
-//        if (token == null) {
-//            return CommonResult.validateFailed("用户名或密码错误");
-//        }
-//        Map<String, String> tokenMap = new HashMap<>();
-//        tokenMap.put("token", token);
-//        tokenMap.put("tokenHead", tokenHead);
-//        return CommonResult.success(tokenMap);
-//    }
-
-
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult login(@RequestBody UmsAdminLoginParam umsAdminLoginParam) {
-        String token = umsAdminService.login(umsAdminLoginParam.getUsername(), umsAdminLoginParam.getPassword());
+        String token = umsAdminService.login(umsAdminLoginParam);
         if (token == null) {
             return CommonResult.validateFailed("用户名或密码错误");
         }
+        redisUtil.set(RedisConstants.LOGIN_TOKEN+umsAdminLoginParam.getUsername(),token);
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
         return CommonResult.success(tokenMap);
     }
-
-
-
-
 
 }

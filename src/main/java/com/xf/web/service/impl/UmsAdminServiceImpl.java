@@ -2,6 +2,8 @@ package com.xf.web.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xf.web.common.enums.DbStatus;
+import com.xf.web.common.jwt.TokenUtil;
+import com.xf.web.dto.UmsAdminLoginParam;
 import com.xf.web.dto.UmsAdminParam;
 import com.xf.web.entity.UmsAdmin;
 import com.xf.web.mapper.UmsAdminLoginLogMapper;
@@ -26,6 +28,8 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
     @Autowired
     private UmsAdminMapper umsAdminMapper;
 
+    @Autowired
+    private TokenUtil tokenUtil;
 
     @Autowired
     private UmsAdminLoginLogMapper umsAdminLoginLogMapper;
@@ -46,9 +50,13 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
     }
 
     @Override
-    public String login(String username, String password) {
+    public String login(UmsAdminLoginParam umsAdminLoginParam) {
+        UmsAdmin umsAdmin = new UmsAdmin()
+                .setUsername(umsAdminLoginParam.getUsername())
+                .setPassword(umsAdminLoginParam.getPassword());
+        String token = tokenUtil.getToken(umsAdmin);
 
-        return null;
+        return token;
     }
 
 
